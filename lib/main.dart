@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:send_data_tp/todo.dart';
 
+import 'DetailScreen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -90,6 +92,17 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(todos[index].title),
+            // When a user taps the ListTile, navigate to the DetailScreen.
+            // Notice that you're not only creating a DetailScreen, you're
+            // also passing the current todo through to it.
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(todo: todos[index]),
+                ),
+              );
+            },
           );
         },
       ),
