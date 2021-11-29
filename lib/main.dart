@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:send_data_tp/todo.dart';
+import 'package:send_data_tp/todoScreen.dart';
 
 import 'DetailScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MaterialApp(
+      title: 'Passing Data',
+      home: TodosScreen(
+        todos: List.generate(
+          20,
+              (i) => Todo(
+            'Todo $i',
+            'A description of what needs to be done for Todo $i',
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -87,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+
       body: ListView.builder(
         itemCount: todos.length,
         itemBuilder: (context, index) {
@@ -99,13 +114,19 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailScreen(todo: todos[index]),
+                  builder: (context) => const DetailScreen(),
+                  // Pass the arguments as part of the RouteSettings. The
+                  // DetailScreen reads the arguments from these settings.
+                  settings: RouteSettings(
+                    arguments: todos[index],
+                  ),
                 ),
               );
             },
           );
         },
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
